@@ -34,4 +34,4 @@ RUN conda config --add channels conda-forge && \
     git clone https://github.com/Supervisor/superlance.git && \
     cd superlance && python setup.py install && \
     cd /tmp/ && rm -rf /tmp/superlance/
-CMD supervisord -c /mnt/config/supervisord.conf
+CMD ["supervisord", "-c", "/mnt/config/supervisord.conf"]

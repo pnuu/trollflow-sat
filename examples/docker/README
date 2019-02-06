@@ -1,0 +1,1 @@
+docker run -it --mount type=bind,source=`pwd`/config_seviri_hrit/,target=/mnt/config/ --mount type=bind,source=`pwd`/logs/,target=/mnt/logs/ --mount type=bind,source=`pwd`/input/,target=/mnt/input/ --mount type=bind,source=`pwd`/output/,target=/mnt/output/ trollflow bash

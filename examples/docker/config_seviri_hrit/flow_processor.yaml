@@ -1,0 +1,59 @@
+config:
+  product_list: &product_list
+    /mnt/config/products.yaml
+  log_config:
+    /mnt/config/flow_processor_logging.ini
+  use_utc: True
+  force_gc: Tue
+  coverage_check: False
+
+work:
+  - type: daemon
+    name: listener
+    components:
+      - class: !!python/object:posttroll.listener.ListenerContainer
+          topics:
+            - /collection/msg0deg
+
+  - type: workflow
+    name: satpy_compositor
+    Workflow:
+      - trollflow_sat.satpy_compositor.SceneLoader:
+          product_list: *product_list
+          use_lock: True
+          instruments:
+            - seviri
+          readers:
+            - seviri_l1b_hrit
+          service:
+            msg0deg
+
+  - type: workflow
+    name: satpy_resampler
+    Workflow:
+      - trollflow_sat.satpy_resampler.Resampler:
+          # Use "null" instead of "None"
+          radius: 15000
+          # cache_dir: /mnt/resample_cache/
+          proj_method: nearest
+          mask_area: False
+          product_list: *product_list
+          use_lock: True
+          process_by_area: True
+
+  - type: daemon
+    name: satpy_writer
+    components:
+      - class: !!python/object:trollflow_sat.satpy_writer.DataWriterContainer
+          nameservers: null
+          port: 0
+          topic: "/image/msg0deg/{productname}"
+          use_lock: True
+          save_settings:
+            tile: True
+            blockxsize: 512
+            blockysize: 512
+            compress: deflate
+            # Overviews (reduced resolution images) created from the full
+            # resolution data and embedded in the saved (GeoTIFF) files
+            # overviews: [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]

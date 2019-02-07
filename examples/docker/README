@@ -1,1 +1,105 @@
-docker run -it --mount type=bind,source=`pwd`/config_seviri_hrit/,target=/mnt/config/ --mount type=bind,source=`pwd`/logs/,target=/mnt/logs/ --mount type=bind,source=`pwd`/input/,target=/mnt/input/ --mount type=bind,source=`pwd`/output/,target=/mnt/output/ trollflow bash
+This example shows how to:
+
+1) Build a Docker image that contains everything needed to run trollflow
+2) Use the Docker image to produce satellite images from various different
+   satellites
+3) Modify the config files to suit your needs
+
+
+1) Building the Docker image
+
+a) Install Docker
+
+  Install docker following the instructions from the following links for
+  your operating system.
+
+  Ubuntu: https://docs.docker.com/install/linux/docker-ce/ubuntu/
+  Fedora: https://docs.docker.com/install/linux/docker-ce/fedora/
+  OSX: https://docs.docker.com/docker-for-mac/install/
+  Windows: https://docs.docker.com/docker-for-windows/install/
+
+b) Build the docker image "trollflow"
+
+  After you have a working Docker installation, in commandline, navigate
+  to the directory where this README file is located
+  (trollflow-sat/examples/docker/) and issue the following command:
+
+  In linux or OSX:
+
+    docker build -t trollflow -f build/Dockerfile build
+
+  In windows:
+
+    docker build -t trollflow -f build\Dockerfile build
+
+  Depending on the computer and network connection, the build takes from
+  5 minutes to 20 minutes.
+
+
+2) Running production
+
+  To test the Docker image to produce images from satellite data,
+  you'll need some satellite data.  This example contains example
+  configurations for the following satellite instruments and formats:
+
+  - MSG SEVIRI in uncompressed HRIT format
+
+  All the configuration files use UNIX paths, as the Docker image is
+  based on Ubuntu linux.
+
+a) Start the trollflow Docker image
+
+  This example shows how to run production for MSG SEVIRI data in
+  uncompressed HRIT format.  To run other examples, replace the
+  "source" mount-point in the first line after "docker run" to point
+  to any of the other supplied directories.
+
+  - in linux or OSX:
+
+  docker run \
+    --mount type=bind,source=`pwd`/config_seviri_hrit/,target=/mnt/config/ \
+    --mount type=bind,source=`pwd`/logs/,target=/mnt/logs/ \
+    --mount type=bind,source=`pwd`/input/,target=/mnt/input/ \
+    --mount type=bind,source=`pwd`/output/,target=/mnt/output/ \
+    trollflow
+
+  - in windows:
+
+  docker run \
+    --mount type=bind,source=%cd%}config_seviri_hrit,target=/mnt/config/ \
+    --mount type=bind,source=%cd%\logs,target=/mnt/logs/ \
+    --mount type=bind,source=%cd%\input,target=/mnt/input/ \
+    --mount type=bind,source=%cd%\output,target=/mnt/output/ \
+    trollflow
+
+  This will start trollflow and mount the four subdirectories within
+  this directory to the trollflow Docker container.
+
+b) Copy files to "input" directory
+
+  Copying files to the mounted "output" subdirectory starts the
+  processing.  Log files are written to "logs" directory, and
+  following them shows the progress of the processing.  The log
+  messages are also printed in the terminal where the trollflow Docker
+  container is running.
+
+c) The results
+
+  In the case of succesful run, the resulting images are saved to
+  "output" directory.
+
+
+3) Adapting the configuration files
+
+  The example configuration files can be modified as the user sees
+  fit, but the following things need to be noted:
+
+  - The trollflow Docker image is built to start Supervisord (which
+    handles the startup of all the necessary software) using the
+    configuration file placed in /mnt/config/supervisord.conf
+
+  - If the paths for the input, output and/or logs are changed, these
+    need to be updated also in the configuration files
+
+  - Remember to match the mount-points in the "docker run" command to
+    the paths define in the configuration files

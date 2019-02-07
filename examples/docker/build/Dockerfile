@@ -1,5 +1,4 @@
 FROM continuumio/miniconda3:latest
-EXPOSE 9001
 RUN conda config --add channels conda-forge && \
     conda update conda && \
     conda install satpy \
@@ -20,13 +19,10 @@ RUN conda config --add channels conda-forge && \
     scp \
     paramiko \
     dpath && \
-    conda clean -a -y && \
-    pip install posttroll && \
-    pip install pytroll-schedule && \
-    pip install pytroll-collectors && \
-    pip install trollmoves && \
-    pip install trollflow && \
-    pip install trollflow-sat && \
+    conda clean -a -y
+ADD requirements.txt /tmp/
+RUN pip install -r /tmp/requirements.txt && \
+    rm -r /tmp/requirements.txt &&  \
     cd /tmp/ && \
     git clone https://github.com/Supervisor/supervisor.git && \
     cd supervisor && python setup.py install && \

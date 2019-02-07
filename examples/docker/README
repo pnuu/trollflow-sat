@@ -62,6 +62,7 @@ a) Start the trollflow Docker image
     --mount type=bind,source=`pwd`/input/,target=/mnt/input/ \
     --mount type=bind,source=`pwd`/output/,target=/mnt/output/ \
     -p 9001:9001 \
+    --rm \
     trollflow
 
   - in windows:
@@ -72,6 +73,7 @@ a) Start the trollflow Docker image
     --mount type=bind,source=%cd%\input,target=/mnt/input/ \
     --mount type=bind,source=%cd%\output,target=/mnt/output/ \
     -p 9001:9001 \
+    --rm \
     trollflow
 
   This will start trollflow and mount the four subdirectories within

@@ -29,5 +29,12 @@ RUN pip install -r /tmp/requirements.txt && \
     cd /tmp/ && rm -rf /tmp/supervisor/ && \
     git clone https://github.com/Supervisor/superlance.git && \
     cd superlance && python setup.py install && \
-    cd /tmp/ && rm -rf /tmp/superlance/
+    cd /tmp/ && rm -rf /tmp/superlance/ && \
+    python -c 'from pyspectral.utils import download_luts; \
+      from pyspectral.utils import logging_on; import logging; \
+      logging_on(logging.DEBUG); download_luts()' && \
+    python -c 'from pyspectral.utils import download_rsr; \
+      from pyspectral.utils import logging_on; import logging; \
+      logging_on(logging.DEBUG); download_rsr()'
+
 CMD ["supervisord", "-c", "/mnt/config/supervisord.conf"]

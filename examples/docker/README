@@ -61,6 +61,7 @@ a) Start the trollflow Docker image
     --mount type=bind,source=`pwd`/logs/,target=/mnt/logs/ \
     --mount type=bind,source=`pwd`/input/,target=/mnt/input/ \
     --mount type=bind,source=`pwd`/output/,target=/mnt/output/ \
+    -p 9001:9001 \
     trollflow
 
   - in windows:
@@ -70,10 +71,19 @@ a) Start the trollflow Docker image
     --mount type=bind,source=%cd%\logs,target=/mnt/logs/ \
     --mount type=bind,source=%cd%\input,target=/mnt/input/ \
     --mount type=bind,source=%cd%\output,target=/mnt/output/ \
+    -p 9001:9001 \
     trollflow
 
   This will start trollflow and mount the four subdirectories within
   this directory to the trollflow Docker container.
+
+  The processes running inside the container can be controlled and
+  monitored by opening the following URL in a browser:
+
+    http://127.0.0.1:9001
+
+  The login credentials, given in supervisord.conf, are "username" and
+  "password".
 
 b) Copy files to "input" directory
 

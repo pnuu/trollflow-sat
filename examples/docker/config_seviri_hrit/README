@@ -17,14 +17,14 @@ for incoming files, and logging config for it.
 segment_gatherer.yaml
 ---------------------
 
-Configuation file for segment_gatherer, which collects the messages
+Configuration file for segment_gatherer, which collects the messages
 coming from trollstalker to one message that contains metadata of all
 the required files to produce the images.
 
 flow_processor.yaml and flow_processor_logging.ini
 --------------------------------------------------
 
-Definition of the processing chain and its' logging: creation of
+Definition of the processing chain and its logging: creation of
 composites, resampling to target area, writing to files.
 
 products.yaml

@@ -17,5 +17,5 @@ posttroll:
   topics:
     - /segment/msg0deg
   publish_topic:
-    /collection/msg0deg
+    /dataset/msg0deg
 

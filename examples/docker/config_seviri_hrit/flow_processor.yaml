@@ -13,7 +13,7 @@ work:
     components:
       - class: !!python/object:posttroll.listener.ListenerContainer
           topics:
-            - /collection/msg0deg
+            - /dataset/msg0deg
 
   - type: workflow
     name: satpy_compositor

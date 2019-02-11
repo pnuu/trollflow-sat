@@ -1,0 +1,42 @@
+common:
+  output_dir: &output_dir
+    /mnt/output/
+  coverage_check: False
+  fname_pattern: &fname
+    "{time:%Y%m%d_%H%M}_{platform_name}_{areaname}_{productname}.{format}"
+  process_by_area: True
+
+formats: &formats
+  - format: tif
+    writer: geotiff
+
+sun_limit_day: &sunzen_day
+  90.0
+sun_limit_night: &sunzen_night
+  90.0
+
+product_list: &product_list
+  overview:
+    productname: overview
+    output_dir: *output_dir
+    formats: *formats
+    sunzen_day_maximum: *sunzen_day
+  natural_color:
+    productname: natural_color
+    output_dir: *output_dir
+    formats: *formats
+    sunzen_day_maximum: *sunzen_day
+  night_overview:
+    productname: night_overview
+    output_dir: *output_dir
+    formats: *formats
+    sunzen_night_minimum: *sunzen_night
+  fog:
+    productname: fog
+    output_dir: *output_dir
+    formats: *formats
+
+product_list:
+  euro4:
+    areaname: euro4
+    products: *product_list

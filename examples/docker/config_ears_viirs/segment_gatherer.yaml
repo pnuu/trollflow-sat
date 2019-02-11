@@ -1,0 +1,22 @@
+patterns:
+  msg:
+    pattern:
+      "SV{segment}C_{orig_platform_name}_d{start_time:%Y%m%d_t%H%M%S}{start_decimal:1d}_e{end_time:%H%M%S}{end_decimal:1d}_b{orbit_number:5d}_c{proctime:s}_eum_ops.h5"
+    critical_files: null
+    wanted_files: :M,:DNB
+    all_files: :M,:DNB
+    variable_tags:
+      - proctime
+
+timeliness:
+  20
+
+time_name:
+  start_time
+
+posttroll:
+  topics:
+    - /segment/ears_viirs
+  publish_topic:
+    /dataset/ears_viirs
+

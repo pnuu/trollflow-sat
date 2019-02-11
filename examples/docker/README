@@ -57,6 +57,7 @@ a) Start the trollflow Docker image
   - in linux or OSX:
 
   docker run \
+    -e LOCAL_USER_ID=`id -u $USER` \
     --mount type=bind,source=`pwd`/config_seviri_hrit/,target=/mnt/config/ \
     --mount type=bind,source=`pwd`/logs/,target=/mnt/logs/ \
     --mount type=bind,source=`pwd`/input/,target=/mnt/input/ \

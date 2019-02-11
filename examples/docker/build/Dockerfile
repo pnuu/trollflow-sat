@@ -1,4 +1,8 @@
 FROM continuumio/miniconda3:latest
+
+RUN apt-get update && apt-get -y --no-install-recommends install \
+    gosu
+
 RUN conda config --add channels conda-forge && \
     conda update conda && \
     conda install satpy \
@@ -35,6 +39,12 @@ RUN pip install -r /tmp/requirements.txt && \
       logging_on(logging.DEBUG); download_luts()' && \
     python -c 'from pyspectral.utils import download_rsr; \
       from pyspectral.utils import logging_on; import logging; \
-      logging_on(logging.DEBUG); download_rsr()'
+      logging_on(logging.DEBUG); download_rsr()' && \
+    mkdir -p /home/user/.local/share && \
+    mv /root/.local/share/pyspectral /home/user/.local/share/
 
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["supervisord", "-c", "/mnt/config/supervisord.conf"]

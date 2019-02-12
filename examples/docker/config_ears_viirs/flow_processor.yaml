@@ -34,7 +34,7 @@ work:
       - trollflow_sat.satpy_resampler.Resampler:
           # Use "null" instead of "None"
           radius: 2000
-          proj_method: nearest
+          resampler: nearest
           mask_area: True
           product_list: *product_list
           use_lock: True

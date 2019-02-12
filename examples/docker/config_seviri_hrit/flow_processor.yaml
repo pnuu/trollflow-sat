@@ -33,9 +33,13 @@ work:
     Workflow:
       - trollflow_sat.satpy_resampler.Resampler:
           # Use "null" instead of "None"
+          # for nearest neighbour
           radius: 15000
+          # for bilinear
+          # radius: 50000
           # cache_dir: /mnt/resample_cache/
           resampler: nearest
+          # resampler: bilinear
           mask_area: False
           product_list: *product_list
           use_lock: True

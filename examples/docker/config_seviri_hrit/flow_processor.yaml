@@ -35,7 +35,7 @@ work:
           # Use "null" instead of "None"
           radius: 15000
           # cache_dir: /mnt/resample_cache/
-          proj_method: nearest
+          resampler: nearest
           mask_area: False
           product_list: *product_list
           use_lock: True

@@ -26,11 +26,11 @@ b) Build the docker image "trollflow"
 
   In linux or OSX:
 
-    docker build -t trollflow -f build/Dockerfile build
+    docker build -t trollflow -f build/Dockerfile build_dir
 
   In windows:
 
-    docker build -t trollflow -f build\Dockerfile build
+    docker build -t trollflow -f build\Dockerfile build_dir
 
   Depending on the computer and network connection, the build takes from
   5 minutes to 20 minutes.
